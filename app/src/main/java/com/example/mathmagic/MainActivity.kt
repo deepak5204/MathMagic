@@ -41,6 +41,8 @@ class MainActivity : ComponentActivity() {
         const val TOTAL_VALUE = "totalValue"
         const val TIME_DIFFERENCE = "timeDifference"
         const val INITIAL_VALUE = "initialValue"
+        const val FINAL_ANSWER = "finalAnswer"
+        const val CALCULATED_VALUE = "calculatedValue"
     }
 }
 

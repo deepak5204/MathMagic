@@ -17,7 +17,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mathmagic.MainActivity.Companion.ADDITION
+import com.example.mathmagic.MainActivity.Companion.CALCULATED_VALUE
 import com.example.mathmagic.MainActivity.Companion.DIVISION
+import com.example.mathmagic.MainActivity.Companion.FINAL_ANSWER
 import com.example.mathmagic.MainActivity.Companion.INITIAL_VALUE
 import com.example.mathmagic.MainActivity.Companion.MULTIPLICATION
 import com.example.mathmagic.MainActivity.Companion.SELECTED_OPERATION
@@ -127,7 +129,7 @@ fun MathMagicNavGraph(
                     },
                     onProceedClick = { calculatedValue ->
                         Log.d("TAG", "MathMagicNavGraph: $calculatedValue")
-                        navController.navigate(route = MathMagicRoutes.ValidateAnswerScreen.route)
+                        navController.navigate(route = MathMagicRoutes.ValidateAnswerScreen.buildRoute(calculatedValue))
                     },
                     onRetryClick = { totalValue, timeDifference ->
                         navController.popBackStack()
@@ -139,25 +141,53 @@ fun MathMagicNavGraph(
                     }
                 )
             }
-            composable(route = MathMagicRoutes.ValidateAnswerScreen.route){
+            composable(route = MathMagicRoutes.ValidateAnswerScreen.route,
+                arguments = listOf(
+                    navArgument(CALCULATED_VALUE) {
+                        type = NavType.StringType
+                    }
+                )
+                ){backStackEntry ->
+                val calculateValue = backStackEntry.arguments?.getString(CALCULATED_VALUE, "")
                 ValidateAnswerScreen(
                     modifier = modifier,
                     onBackClick = {
                         navController.popBackStack()
                     },
-                    onProceedClick = {
-                        navController.navigate(route = MathMagicRoutes.ResultDialogBox.route)
+                    onProceedClick = { finalAnswer: String ->
+                        navController.navigate(
+                            route = MathMagicRoutes.ResultDialogBox.buildRoute(
+                                finalAnswer = finalAnswer.toString(),
+                                calculateAnswer = calculateValue.toString()
+                            )
+                        )
                     }
                 )
             }
-            composable(route = MathMagicRoutes.ResultDialogBox.route){
+            composable(route = MathMagicRoutes.ResultDialogBox.route,
+                arguments = listOf(
+                    navArgument(FINAL_ANSWER){
+                        type = NavType.StringType
+                    },
+                    navArgument(CALCULATED_VALUE){
+                        type = NavType.StringType
+                    }
+                )){ backStackEntry ->
+                val finalAnswer = backStackEntry.arguments?.getString(FINAL_ANSWER ?: "" )
+                val calculateAnswer = backStackEntry.arguments?.getString(CALCULATED_VALUE ?: "")
+
                 ResultDialogBox(
                     modifier = modifier,
+                    finalAnswer = finalAnswer.toString(),
+                    calculateAnswer = calculateAnswer.toString(),
                     exitGame = {
                         onFinish()
                     },
                     playAgain = {
                         navController.navigate(route = MathMagicRoutes.HomeScreen.route)
+                    },
+                    onBackClick = {
+                        navController.popBackStack()
                     }
                    )
             }

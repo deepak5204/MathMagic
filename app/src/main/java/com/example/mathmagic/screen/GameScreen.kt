@@ -47,13 +47,13 @@ fun GameScreen(
     val isButtonEnable = remember { mutableStateOf(false) }
     val counter = remember { mutableStateOf(1) }
     val currentNumber = remember { mutableStateOf(Random.nextInt(1, 100)) }
-    val calculatedValue = remember { mutableIntStateOf(initialValue.toInt()) }
+    val calculatedValue = remember { mutableIntStateOf(currentNumber.value) }
 
     LaunchedEffect(Unit) {
         while (counter.value < totalValue) {
-            calculatedValue.intValue += currentNumber.value
             delay(timeDifference.toLong())
             currentNumber.value = Random.nextInt(1, 100)
+            calculatedValue.intValue += currentNumber.value
             counter.value++
         }
     }

@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.sp
 fun ValidateAnswerScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onProceedClick: () -> Unit
+    onProceedClick: (finalAnswer: String) -> Unit
 ) {
     val userAnswer = remember { mutableStateOf("") }
     Column(
@@ -61,7 +61,7 @@ fun ValidateAnswerScreen(
 
         Button(
             onClick = {
-                onProceedClick()
+                onProceedClick(userAnswer.value.toString())
             }
         ) {
             Text("Validate Answer")
