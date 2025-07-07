@@ -31,7 +31,8 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 @Composable
 fun MathMagicNavGraph(
     modifier: Modifier = Modifier,
-    startDestination: String
+    startDestination: String,
+    onFinish: () -> Unit
 ) {
 
     val sheetState = rememberModalBottomSheetState(
@@ -53,36 +54,56 @@ fun MathMagicNavGraph(
             composable(route = MathMagicRoutes.HomeScreen.route){
                 HomeScreen(
                     modifier = modifier,
-                    onBackClick = {},
-                    onProceedClick = {  }
+                    onBackClick = {
+                        onFinish()
+                    },
+                    onProceedClick = {
+                        navController.navigate(route = MathMagicRoutes.GameStartScreen.route)
+                    }
                 )
             }
             composable(route = MathMagicRoutes.GameStartScreen.route){
                 GameStartScreen(
                     modifier = modifier,
-                    onBackClick = {},
-                    onProceedClick = {  }
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onProceedClick = {
+                        navController.navigate(route = MathMagicRoutes.GameScreen.route)
+                    }
                 )
             }
             composable(route = MathMagicRoutes.GameScreen.route){
                 GameScreen(
                     modifier = modifier,
-                    onBackClick = {},
-                    onProceedClick = {  }
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onProceedClick = {
+                        navController.navigate(route = MathMagicRoutes.ValidateAnswerScreen.route)
+                    }
                 )
             }
             composable(route = MathMagicRoutes.ValidateAnswerScreen.route){
                 ValidateAnswerScreen(
                     modifier = modifier,
-                    onBackClick = {},
-                    onProceedClick = {  }
+                    onBackClick = {
+                        navController.popBackStack()
+                    },
+                    onProceedClick = {
+                        navController.navigate(route = MathMagicRoutes.ResultDialogBox.route)
+                    }
                 )
             }
             composable(route = MathMagicRoutes.ResultDialogBox.route){
                 ResultDialogBox(
                     modifier = modifier,
-                    exitGame = {},
-                    playAgain = {}
+                    exitGame = {
+                        onFinish()
+                    },
+                    playAgain = {
+                        navController.navigate(route = MathMagicRoutes.HomeScreen.route)
+                    }
                    )
             }
         }
