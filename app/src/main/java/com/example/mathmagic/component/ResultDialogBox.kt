@@ -73,13 +73,6 @@ fun ResultDialogBox(
                         color = Color(0xFF388E3C)
                     )
 
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    // 🙌 Message
-                    Text(
-                        text = "Would you like to retry or exit?",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
 
                     Spacer(modifier = Modifier.height(24.dp))
 
@@ -109,21 +102,61 @@ fun ResultDialogBox(
     }
     else {
 
-        AlertDialog(
-            onDismissRequest = onBackClick,
-            title = { Text(text = "Game Over") },
-            text = { Text("Would you like to retry or exit the game?") },
-            confirmButton = {
-                Button(onClick = playAgain) {
-                    Text("Play Again")
-                }
-            },
-            dismissButton = {
-                OutlinedButton(onClick = onBackClick) {
-                    Text("Exit")
+        Dialog(onDismissRequest = exitGame) {
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White)
+                    .padding(16.dp)
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    // 🎉 Background Image (top)
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_game_over), // Replace with your drawable
+                        contentDescription = "Victory Image",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(180.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    // 🏆 Title
+                    Text(
+                        text = "You Loss!! Better Luck Next time..",
+                        style = MaterialTheme.typography.headlineSmall.copy(fontSize = 22.sp),
+                        color = Color(0xFF388E3C)
+                    )
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    // ✅ Buttons
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+
+                    ) {
+                        OutlinedButton(
+                            onClick = exitGame,
+                            modifier = Modifier.weight(1f).padding(start = 8.dp)
+                        ) {
+                            Text("Exit")
+                        }
+
+                        Button(
+                            onClick = playAgain,
+                            modifier = Modifier.weight(1f).padding(end = 8.dp)
+                        ) {
+                            Text("Play Again")
+                        }
+                    }
                 }
             }
-        )
+        }
     }
 }
 
