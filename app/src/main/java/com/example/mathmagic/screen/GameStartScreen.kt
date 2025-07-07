@@ -47,7 +47,7 @@ fun GameStartScreen(
     modifier: Modifier = Modifier,
     selectedOperation: String,
     onBackClick: () -> Unit,
-    onProceedClick: () -> Unit
+    onProceedClick: (totalValues: String, timeDifference: String) -> Unit
 ) {
     val isStartEnable = remember { mutableStateOf(false) }
     val totalValues = remember { mutableStateOf("") }
@@ -80,7 +80,7 @@ fun GameStartScreen(
                 Button(
                     onClick = {
                         if (isStartEnable.value) {
-                            onProceedClick()
+                            onProceedClick(totalValues.value, timeDifference.value)
                         }
                     },
                     modifier = Modifier
@@ -180,11 +180,12 @@ fun GameStartScreen(
 @Composable
 private fun GameStartScreenPreview() {
     MathMagicTheme {
-        GameStartScreen(
-            onBackClick = {},
-            onProceedClick = {},
-            selectedOperation = "",
-
-        )
+//        GameStartScreen(
+//            onBackClick = {},
+//            onProceedClick() = {},
+//            selectedOperation = "",
+//
+//
+//        )
     }
 }

@@ -17,6 +17,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mathmagic.MainActivity.Companion.SELECTED_OPERATION
+import com.example.mathmagic.MainActivity.Companion.TIME_DIFFERENCE
+import com.example.mathmagic.MainActivity.Companion.TOTAL_VALUE
 import com.example.mathmagic.component.ResultDialogBox
 import com.example.mathmagic.navigation.MathMagicRoutes.ResultDialogBox
 import com.example.mathmagic.screen.GameScreen
@@ -62,7 +64,6 @@ fun MathMagicNavGraph(
                         onFinish()
                     },
                     onProceedClick = { selectedOperation ->
-                        Log.d("TAG", "MathMagicNavGraph: $selectedOperation")
                         navController.navigate(route = MathMagicRoutes.GameStartScreen.buildRoute(
                             selectedOperation = selectedOperation
                         ))
@@ -82,19 +83,43 @@ fun MathMagicNavGraph(
                     onBackClick = {
                         navController.popBackStack()
                     },
-                    onProceedClick = {
-                        navController.navigate(route = MathMagicRoutes.GameScreen.route)
+                    onProceedClick = { totalValue, timeDifference ->
+                        Log.d("TAG", "MathMagicNavGraph: $totalValue, $timeDifference")
+                        navController.navigate(route = MathMagicRoutes.GameScreen.buildRoute(
+                            totalValue = totalValue.toString(),
+                            timeDifference = timeDifference.toString()
+                        ))
                     }
                 )
             }
-            composable(route = MathMagicRoutes.GameScreen.route){
+            composable(route = "gameScreen/{$TOTAL_VALUE}/{$TIME_DIFFERENCE}",
+                arguments = listOf(
+                    navArgument(TOTAL_VALUE) {
+                        type = NavType.StringType
+                    },
+                    navArgument(TIME_DIFFERENCE){
+                        type = NavType.StringType
+                    }
+                )
+            ){backStackEntry ->
+                val totalValue = backStackEntry.arguments?.getString(TOTAL_VALUE, "")
+                val timeDifference = backStackEntry.arguments?.getString(TIME_DIFFERENCE, "")
                 GameScreen(
                     modifier = modifier,
+                    totalValue = totalValue?.toInt() ?: 0,
+                    timeDifference = timeDifference?.toInt() ?: 0,
                     onBackClick = {
                         navController.popBackStack()
                     },
                     onProceedClick = {
                         navController.navigate(route = MathMagicRoutes.ValidateAnswerScreen.route)
+                    },
+                    onRetryClick = { totalValue, timeDifference ->
+                        navController.popBackStack()
+                        navController.navigate(route = MathMagicRoutes.GameScreen.buildRoute(
+                            totalValue = totalValue.toString(),
+                            timeDifference = timeDifference.toString()
+                        ))
                     }
                 )
             }

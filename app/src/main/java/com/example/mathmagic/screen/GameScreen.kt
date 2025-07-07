@@ -36,16 +36,19 @@ import kotlin.random.Random
 @Composable
 fun GameScreen(
     modifier: Modifier = Modifier,
+    totalValue: Int,
+    timeDifference: Int,
     onBackClick: () -> Unit,
-    onProceedClick: () -> Unit
+    onProceedClick: () -> Unit,
+    onRetryClick: (totalValue: String, timeDifference: String) -> Unit
 ) {
     val isButtonEnable = remember { mutableStateOf(false) }
-    val counter = remember { mutableStateOf(0) }
+    val counter = remember { mutableStateOf(1) }
     val currentNumber = remember { mutableStateOf(Random.nextInt(1, 100)) }
 
     LaunchedEffect(Unit) {
-        while (counter.value < 10) {
-            delay(1000)
+        while (counter.value < totalValue) {
+            delay(timeDifference.toLong())
             currentNumber.value = Random.nextInt(1, 100)
             counter.value++
         }
@@ -56,14 +59,16 @@ fun GameScreen(
             TopAppBar(
                 title = { Text( text = "Game Screen") },
                 navigationIcon = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        onBackClick()
+                    }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
         },
         bottomBar = {
-            isButtonEnable.value = counter.value == 10
+            isButtonEnable.value = counter.value == totalValue
 
             val bgColor = if (isButtonEnable.value)
                 colorResource(id = R.color.holo_blue_dark)
@@ -80,7 +85,7 @@ fun GameScreen(
                     Button(
                         onClick = {
                             if(isButtonEnable.value){
-                                onProceedClick()
+                                onRetryClick(totalValue.toString(), timeDifference.toString())
                             }
                         },
                         modifier = Modifier
@@ -131,9 +136,11 @@ fun GameScreen(
 @Composable
 private fun GameScreenPreview() {
     MathMagicTheme {
-        GameScreen(
-            onBackClick = {},
-            onProceedClick = {}
-        )
+//        GameScreen(
+//            totalValue = 0,
+//            timeDifference = 0,
+//            onBackClick = {},
+//            onProceedClick = {}
+//        )
     }
 }

@@ -38,6 +38,8 @@ class MainActivity : ComponentActivity() {
         const val MULTIPLICATION = "Multiplication"
         const val DIVISION = "Division"
         const val SELECTED_OPERATION= "selectedOperation"
+        const val TOTAL_VALUE = "totalValue"
+        const val TIME_DIFFERENCE = "timeDifference"
     }
 }
 
