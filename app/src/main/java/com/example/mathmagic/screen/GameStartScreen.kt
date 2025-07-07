@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.BottomAppBar
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -112,7 +114,7 @@ fun GameStartScreen(
             )
             Spacer(modifier = Modifier.height(2.dp))
             OutlinedTextField(
-                value = "",
+                value = totalValues.value,
                 onValueChange = {
                     totalValues.value = it
                 },
@@ -121,6 +123,9 @@ fun GameStartScreen(
                 )},
                 modifier = Modifier
                     .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                )
             )
 
 
@@ -133,7 +138,7 @@ fun GameStartScreen(
             )
             Spacer(modifier = Modifier.height(2.dp))
             OutlinedTextField(
-                value = "",
+                value = timeDifference.value,
                 onValueChange = {
                     timeDifference.value = it
                 },
@@ -142,6 +147,9 @@ fun GameStartScreen(
                 )},
                 modifier = Modifier
                     .fillMaxWidth(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                )
             )
 
         }

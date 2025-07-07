@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.mathmagic.navigation.MathMagicNavGraph
+import com.example.mathmagic.navigation.MathMagicRoutes
 import com.example.mathmagic.screen.GameScreen
 import com.example.mathmagic.screen.HomeScreen
 import com.example.mathmagic.ui.theme.MathMagicTheme
@@ -23,7 +24,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             MathMagicNavGraph(
                 modifier = Modifier.fillMaxSize(),
-                startDestination = "HomeScreen"
+                startDestination = MathMagicRoutes.HomeScreen.route,
+                onFinish = {
+                    finish()
+                }
             )
         }
     }

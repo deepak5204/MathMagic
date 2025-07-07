@@ -35,7 +35,7 @@ fun ValidateAnswerScreen(
 
     ){
         Text(
-            text = "Enter time difference in milliseconds",
+            text = "Enter you answer",
             fontSize = 20.sp,
             fontWeight = FontWeight.Medium
         )
