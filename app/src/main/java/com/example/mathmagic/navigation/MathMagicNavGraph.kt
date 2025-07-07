@@ -11,9 +11,12 @@ import com.google.accompanist.navigation.material.ExperimentalMaterialNavigation
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.mathmagic.MainActivity.Companion.SELECTED_OPERATION
 import com.example.mathmagic.component.ResultDialogBox
 import com.example.mathmagic.navigation.MathMagicRoutes.ResultDialogBox
 import com.example.mathmagic.screen.GameScreen
@@ -66,9 +69,16 @@ fun MathMagicNavGraph(
                     }
                 )
             }
-            composable(route = MathMagicRoutes.GameStartScreen.route){
+            composable(route = MathMagicRoutes.GameStartScreen.route,
+                arguments = listOf(
+                    navArgument(SELECTED_OPERATION){
+                        type = NavType.StringType
+                    }
+                )){backStackEntry ->
+                val selectedOperation = backStackEntry.arguments?.getString(SELECTED_OPERATION, "")
                 GameStartScreen(
                     modifier = modifier,
+                    selectedOperation = selectedOperation ?: "",
                     onBackClick = {
                         navController.popBackStack()
                     },

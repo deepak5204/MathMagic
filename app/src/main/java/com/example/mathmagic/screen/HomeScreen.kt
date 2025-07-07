@@ -2,6 +2,7 @@ package com.example.mathmagic.screen
 
 import android.R
 import android.graphics.Color
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -68,7 +69,7 @@ fun HomeScreen(
                 Button(
                     onClick = {
                         if(selectedOperation.value != null){
-                            onProceedClick(selectedOperation.toString())
+                            onProceedClick(selectedOperation.value.toString())
                         }
                     },
                     modifier = Modifier
@@ -83,7 +84,8 @@ fun HomeScreen(
 
     ){
         Column(
-            modifier = Modifier.padding(it)
+            modifier = Modifier
+                .padding(it)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {

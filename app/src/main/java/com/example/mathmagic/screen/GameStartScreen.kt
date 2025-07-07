@@ -1,7 +1,9 @@
 package com.example.mathmagic.screen
 
 import android.R
+import android.R.attr.fontWeight
 import android.R.attr.text
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,12 +35,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mathmagic.MainActivity.Companion.ADDITION
+import com.example.mathmagic.MainActivity.Companion.DIVISION
+import com.example.mathmagic.MainActivity.Companion.MULTIPLICATION
+import com.example.mathmagic.MainActivity.Companion.SUBTRACTION
 import com.example.mathmagic.ui.theme.MathMagicTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GameStartScreen(
     modifier: Modifier = Modifier,
+    selectedOperation: String,
     onBackClick: () -> Unit,
     onProceedClick: () -> Unit
 ) {
@@ -46,6 +53,8 @@ fun GameStartScreen(
     val totalValues = remember { mutableStateOf("") }
     val timeDifference = remember { mutableStateOf("") }
 
+    Log.d("TAG", "GameStartScreen: $selectedOperation")
+    Log.d("TAG", "GameStartScreen: $ADDITION")
     Scaffold(
         topBar = {
             TopAppBar(
@@ -59,7 +68,8 @@ fun GameStartScreen(
         },
         bottomBar = {
 
-            isStartEnable.value = totalValues.value.isNotEmpty() && timeDifference.value.isNotEmpty()
+            isStartEnable.value =
+                totalValues.value.isNotEmpty() && timeDifference.value.isNotEmpty()
 
             val bgColor = if (isStartEnable.value)
                 colorResource(id = R.color.holo_blue_dark)
@@ -69,7 +79,7 @@ fun GameStartScreen(
             BottomAppBar {
                 Button(
                     onClick = {
-                        if(isStartEnable.value){
+                        if (isStartEnable.value) {
                             onProceedClick()
                         }
                     },
@@ -81,80 +91,90 @@ fun GameStartScreen(
                     Text("Start Game")
                 }
             }
-        }
-    ) {
+        }) {
 
         Column(
-            modifier = Modifier.padding(it)
+            modifier = Modifier
+                .padding(it)
                 .padding(16.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround,
                 verticalAlignment = Alignment.CenterVertically
-            ){
+            ) {
                 Text(
-                    text = "Selected Operation",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold
+                    text = "Selected Operation", fontSize = 25.sp, fontWeight = FontWeight.Bold
                 )
+
+                val selectedValue =
+                    when (selectedOperation) {
+                        ADDITION -> {
+                            "+"
+                        }
+
+                        SUBTRACTION -> {
+                            "-"
+                        }
+
+                        MULTIPLICATION -> {
+                            "X"
+                        }
+
+
+                        else -> {
+                            "/"
+                        }
+                    }
+
                 Text(
-                    text = "+",
-                    fontSize = 100.sp,
-                    fontWeight = FontWeight.Bold
+                    text = selectedValue, fontSize = 100.sp, fontWeight = FontWeight.Bold
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Enter total number of values",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Medium
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            OutlinedTextField(
-                value = totalValues.value,
-                onValueChange = {
+                Text(
+                    text = "Enter total number of values",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                OutlinedTextField(value = totalValues.value, onValueChange = {
                     totalValues.value = it
-                },
-                placeholder = { Text(
-                    text = "Enter Number...",
-                )},
-                modifier = Modifier
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
+                }, placeholder = {
+                    Text(
+                        text = "Enter Number...",
+                    )
+                }, modifier = Modifier.fillMaxWidth(), keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 )
-            )
+                )
 
 
-            Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "Enter time difference in milliseconds",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Medium
-            )
-            Spacer(modifier = Modifier.height(2.dp))
-            OutlinedTextField(
-                value = timeDifference.value,
-                onValueChange = {
+                Text(
+                    text = "Enter time difference in milliseconds",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium
+                )
+                Spacer(modifier = Modifier.height(2.dp))
+                OutlinedTextField(value = timeDifference.value, onValueChange = {
                     timeDifference.value = it
-                },
-                placeholder = { Text(
-                    text = "Enter time difference...",
-                )},
-                modifier = Modifier
-                    .fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(
+                }, placeholder = {
+                    Text(
+                        text = "Enter time difference...",
+                    )
+                }, modifier = Modifier.fillMaxWidth(), keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
                 )
-            )
+                )
 
+            }
         }
     }
-}
+
 
 @Preview
 @Composable
@@ -162,7 +182,9 @@ private fun GameStartScreenPreview() {
     MathMagicTheme {
         GameStartScreen(
             onBackClick = {},
-            onProceedClick = {}
+            onProceedClick = {},
+            selectedOperation = "",
+
         )
     }
 }
