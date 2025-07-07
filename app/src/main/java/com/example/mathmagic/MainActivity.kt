@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
         const val SUBTRACTION = "Subtraction"
         const val MULTIPLICATION = "Multiplication"
         const val DIVISION = "Division"
+        const val SELECTED_OPERATION= "selectedOperation"
     }
 }
 

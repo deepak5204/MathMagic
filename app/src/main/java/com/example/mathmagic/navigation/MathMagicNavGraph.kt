@@ -1,5 +1,6 @@
 package com.example.mathmagic.navigation
 
+import android.util.Log
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -57,8 +58,11 @@ fun MathMagicNavGraph(
                     onBackClick = {
                         onFinish()
                     },
-                    onProceedClick = {
-                        navController.navigate(route = MathMagicRoutes.GameStartScreen.route)
+                    onProceedClick = { selectedOperation ->
+                        Log.d("TAG", "MathMagicNavGraph: $selectedOperation")
+                        navController.navigate(route = MathMagicRoutes.GameStartScreen.buildRoute(
+                            selectedOperation = selectedOperation
+                        ))
                     }
                 )
             }

@@ -42,7 +42,7 @@ import com.example.mathmagic.ui.theme.MathMagicTheme
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
-    onProceedClick: () -> Unit
+    onProceedClick: (selectedOperation: String) -> Unit
 ) {
 
     var selectedOperation = remember { mutableStateOf<String?>(null) }
@@ -68,7 +68,7 @@ fun HomeScreen(
                 Button(
                     onClick = {
                         if(selectedOperation.value != null){
-                            onProceedClick()
+                            onProceedClick(selectedOperation.toString())
                         }
                     },
                     modifier = Modifier
