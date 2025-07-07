@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity() {
         const val SELECTED_OPERATION= "selectedOperation"
         const val TOTAL_VALUE = "totalValue"
         const val TIME_DIFFERENCE = "timeDifference"
+        const val INITIAL_VALUE = "initialValue"
     }
 }
 

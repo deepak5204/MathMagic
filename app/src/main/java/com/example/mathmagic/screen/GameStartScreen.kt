@@ -53,8 +53,6 @@ fun GameStartScreen(
     val totalValues = remember { mutableStateOf("") }
     val timeDifference = remember { mutableStateOf("") }
 
-    Log.d("TAG", "GameStartScreen: $selectedOperation")
-    Log.d("TAG", "GameStartScreen: $ADDITION")
     Scaffold(
         topBar = {
             TopAppBar(

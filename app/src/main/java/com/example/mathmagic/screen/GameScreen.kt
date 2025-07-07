@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -39,15 +40,18 @@ fun GameScreen(
     totalValue: Int,
     timeDifference: Int,
     onBackClick: () -> Unit,
-    onProceedClick: () -> Unit,
+    initialValue: String,
+    onProceedClick: (calculatedValue: String) -> Unit,
     onRetryClick: (totalValue: String, timeDifference: String) -> Unit
 ) {
     val isButtonEnable = remember { mutableStateOf(false) }
     val counter = remember { mutableStateOf(1) }
     val currentNumber = remember { mutableStateOf(Random.nextInt(1, 100)) }
+    val calculatedValue = remember { mutableIntStateOf(initialValue.toInt()) }
 
     LaunchedEffect(Unit) {
         while (counter.value < totalValue) {
+            calculatedValue.intValue += currentNumber.value
             delay(timeDifference.toLong())
             currentNumber.value = Random.nextInt(1, 100)
             counter.value++
@@ -101,7 +105,7 @@ fun GameScreen(
                     Button(
                         onClick = {
                             if(isButtonEnable.value){
-                                onProceedClick()
+                                onProceedClick(calculatedValue.value.toString())
                             }
                         },
                         modifier = Modifier
