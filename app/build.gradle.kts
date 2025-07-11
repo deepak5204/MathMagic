@@ -66,4 +66,7 @@ dependencies {
 
     implementation(libs.androidx.compose.material)
 
+    implementation(libs.hilt.android.v248)
+    implementation (libs.androidx.hilt.navigation.compose)
+
 }

@@ -29,7 +29,9 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mathmagic.ui.theme.MathMagicTheme
+import com.example.mathmagic.viewModel.MathMagicViewModel
 import kotlinx.coroutines.delay
 import kotlin.random.Random
 
@@ -37,6 +39,7 @@ import kotlin.random.Random
 @Composable
 fun GameScreen(
     modifier: Modifier = Modifier,
+    viewModel: MathMagicViewModel,
     totalValue: Int,
     timeDifference: Int,
     onBackClick: () -> Unit,
@@ -44,15 +47,33 @@ fun GameScreen(
     onProceedClick: (calculatedValue: String) -> Unit,
     onRetryClick: (totalValue: String, timeDifference: String) -> Unit
 ) {
+
+    val digitSize = viewModel.digitSize.toInt()
+
+
     val isButtonEnable = remember { mutableStateOf(false) }
     val counter = remember { mutableStateOf(1) }
-    val currentNumber = remember { mutableStateOf(Random.nextInt(1, 100)) }
+    val currentNumber = remember { mutableStateOf(
+        when(digitSize){
+            1 -> Random.nextInt(1, 10)
+            2 -> Random.nextInt(10, 100)
+            3 -> Random.nextInt(100, 1000)
+            4 -> Random.nextInt(1000, 10000)
+            else -> Random.nextInt(1, 1000)
+        }
+    ) }
     val calculatedValue = remember { mutableIntStateOf(currentNumber.value) }
 
     LaunchedEffect(Unit) {
         while (counter.value < totalValue) {
             delay(timeDifference.toLong())
-            currentNumber.value = Random.nextInt(1, 100)
+            currentNumber.value = when(digitSize){
+                1 -> Random.nextInt(1, 10)
+                2 -> Random.nextInt(10, 100)
+                3 -> Random.nextInt(100, 1000)
+                4 -> Random.nextInt(1000, 10000)
+                else -> Random.nextInt(1, 1000)
+            }
             calculatedValue.intValue += currentNumber.value
             counter.value++
         }

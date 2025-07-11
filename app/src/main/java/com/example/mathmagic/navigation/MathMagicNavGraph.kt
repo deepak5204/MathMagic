@@ -32,6 +32,7 @@ import com.example.mathmagic.screen.GameScreen
 import com.example.mathmagic.screen.GameStartScreen
 import com.example.mathmagic.screen.HomeScreen
 import com.example.mathmagic.screen.ValidateAnswerScreen
+import com.example.mathmagic.viewModel.MathMagicViewModel
 import com.google.accompanist.navigation.material.BottomSheetNavigator
 import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 
@@ -44,6 +45,7 @@ import com.google.accompanist.navigation.material.ModalBottomSheetLayout
 @Composable
 fun MathMagicNavGraph(
     modifier: Modifier = Modifier,
+    viewModel: MathMagicViewModel,
     startDestination: String,
     onFinish: () -> Unit
 ) {
@@ -86,6 +88,7 @@ fun MathMagicNavGraph(
                 val selectedOperation = backStackEntry.arguments?.getString(SELECTED_OPERATION, "")
                 GameStartScreen(
                     modifier = modifier,
+                    viewModel = viewModel,
                     selectedOperation = selectedOperation ?: "",
                     onBackClick = {
                         navController.popBackStack()
@@ -121,6 +124,7 @@ fun MathMagicNavGraph(
                 val initialValue = backStackEntry.arguments?.getString(INITIAL_VALUE, "")
                 GameScreen(
                     modifier = modifier,
+                    viewModel = viewModel,
                     totalValue = totalValue?.toInt() ?: 0,
                     timeDifference = timeDifference?.toInt() ?: 0,
                     initialValue = initialValue.toString(),
@@ -181,9 +185,11 @@ fun MathMagicNavGraph(
                     finalAnswer = finalAnswer.toString(),
                     calculateAnswer = calculateAnswer.toString(),
                     exitGame = {
+
                         onFinish()
                     },
                     playAgain = {
+                        viewModel.digitSize = ""
                         navController.navigate(route = MathMagicRoutes.HomeScreen.route)
                     },
                     onBackClick = {
