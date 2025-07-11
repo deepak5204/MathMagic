@@ -1,7 +1,6 @@
 package com.example.mathmagic.screen
 
 import android.R
-import android.graphics.Color
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -20,6 +20,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -37,6 +38,9 @@ import com.example.mathmagic.MainActivity.Companion.DIVISION
 import com.example.mathmagic.MainActivity.Companion.MULTIPLICATION
 import com.example.mathmagic.MainActivity.Companion.SUBTRACTION
 import com.example.mathmagic.ui.theme.MathMagicTheme
+import androidx.compose.ui.graphics.Color
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,6 +51,20 @@ fun HomeScreen(
 ) {
 
     var selectedOperation = remember { mutableStateOf<String?>(null) }
+
+    val colors: List<androidx.compose.ui.graphics.Color> = listOf(
+        MaterialTheme.colorScheme.primary,
+        MaterialTheme.colorScheme.secondary,
+        MaterialTheme.colorScheme.tertiary,
+        MaterialTheme.colorScheme.error,
+        MaterialTheme.colorScheme.inversePrimary,
+        MaterialTheme.colorScheme.onSecondary
+    )
+
+    val additionColor = remember { colors.random() }
+    val subtractionColor = remember { colors.random() }
+    val multiplicationColor = remember { colors.random() }
+    val divisionColor = remember { colors.random() }
 
     Scaffold (
         topBar = {
@@ -84,11 +102,15 @@ fun HomeScreen(
 
     ){
         Column(
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
                 .padding(it)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+                .background(color = Color(0xFFE3F3CF))
+                .padding(16.dp)
+                .fillMaxSize(),
         ) {
+
+
             Text(
                 text = "Select Your Operation",
                 fontSize = 30.sp
@@ -110,6 +132,7 @@ fun HomeScreen(
                     Text(
                         text = "+",
                         fontSize = 200.sp,
+                        color = additionColor
                     )
                 }
 
@@ -122,7 +145,8 @@ fun HomeScreen(
                 ){
                     Text(
                         text = "-",
-                        fontSize = 200.sp
+                        fontSize = 200.sp,
+                        color = subtractionColor
                     )
                 }
             }
@@ -142,7 +166,8 @@ fun HomeScreen(
                 ) {
                     Text(
                         text = "X",
-                        fontSize = 200.sp
+                        fontSize = 200.sp,
+                        color = multiplicationColor
                     )
                 }
 
@@ -155,7 +180,8 @@ fun HomeScreen(
                 ) {
                     Text(
                         text = "/",
-                        fontSize = 170.sp
+                        fontSize = 170.sp,
+                        color = divisionColor
                     )
                 }
             }

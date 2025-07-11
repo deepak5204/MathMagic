@@ -69,4 +69,6 @@ dependencies {
     implementation(libs.hilt.android.v248)
     implementation (libs.androidx.hilt.navigation.compose)
 
+    implementation(libs.ui)
+
 }
