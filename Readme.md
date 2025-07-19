@@ -51,14 +51,14 @@ Whether you're a student, competitive exam aspirant, or just looking to stay sha
 ## 📦 Download APK
 
 Want to try the app on your device? Download the latest build here:  
-👉 [Download APK](https://lnkd.in/gfWXX4js)
+👉 [Download APK](https://drive.google.com/file/d/1_Sj7EUN5B4EcF9RWLNMqTSfh2MmiX_ph/view?usp=sharing)
 
 ---
 
 ## 📂 GitHub Repository
 
 Source code available here:  
-👉 [MathMagic GitHub Repo](https://lnkd.in/gQsJHnhZ)
+👉 [MathMagic GitHub Repo](https://github.com/deepak5204/MathMagic)
 
 ---
 
