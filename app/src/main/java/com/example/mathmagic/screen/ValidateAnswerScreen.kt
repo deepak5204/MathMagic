@@ -41,25 +41,27 @@ fun ValidateAnswerScreen(
         horizontalAlignment = Alignment.CenterHorizontally
 
     ){
-        Text(
-            text = "Enter you answer",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Medium
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        OutlinedTextField(
-            value = userAnswer.value,
-            onValueChange = {
-                userAnswer.value = it
-            },
-            placeholder = { Text(
-                text = "Enter your answer...",
-            )},
-            modifier = Modifier,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Number
+        Column(){
+            Text(
+                text = "Enter you answer",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Medium
             )
-        )
+            Spacer(modifier = Modifier.height(10.dp))
+            OutlinedTextField(
+                value = userAnswer.value,
+                onValueChange = {
+                    userAnswer.value = it
+                },
+                placeholder = { Text(
+                    text = "Enter your answer...",
+                )},
+                modifier = Modifier,
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Number
+                )
+            )
+        }
 
         Spacer(modifier = Modifier.height(200.dp))
 

@@ -146,7 +146,6 @@ fun GameScreen(
     ) {
         Box(
             modifier = Modifier.padding(it)
-                .padding(16.dp)
                 .background(color = Color(0xFFE3F3CF))
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
